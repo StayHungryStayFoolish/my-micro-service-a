@@ -58,4 +58,17 @@ public class RequestFromMicroServiceB {
         return client.getPersonListFromB();
     }
 
+    /** 配置权限 ***********************************************/
+    @GetMapping("/secured/get-string-from-b")
+    @Timed
+    public String getStringSecured() {
+        return client.getStringSecuredToB();
+    }
+
+    @PutMapping("/secured/set-string-from-b/{var}")
+    @Timed
+    public String addStringSecured(@PathVariable String var) {
+        return client.setStringSecuredToB(var);
+    }
+
 }

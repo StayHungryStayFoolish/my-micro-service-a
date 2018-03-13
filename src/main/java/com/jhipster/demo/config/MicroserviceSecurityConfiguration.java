@@ -20,9 +20,17 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.web.client.RestTemplate;
 
+// @Secured 支持单一角色或者多个角色之间的任何一个角色,不支持spring EL表达式
+// @PreAuthorize 注解适合进入方法前的权限验证， @PreAuthorize可以将登录用户的roles/permissions参数传到方法中。
+// 例子:
+// @PreAuthorize("hasRole('ADMIN')")   拥有ADMIN角色权限才能访问
+// @PreAuthorize("hasRole('ADMIN') AND hasRole('DBA')")  拥有ADMIN角色和DBA角色权限才能访问
+// @PreAuthorize("hasAnyRole('ADMIN','DBA')") 拥有ADMIN或者DBA角色均可访问
+// @PostAuthorize   注解使用并不多，在方法执行后再进行权限验证。
+// @PreAuthorize / @PostAuthorize 注解更适合方法级的安全,也支持Spring 表达式语言，提供了基于表达式的访问控制。
 @Configuration
-@EnableResourceServer
-@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true)
+@EnableResourceServer                                                     // prePostEnabled 开启可用注解 PreAuthorize 和  PostAuthorize
+@EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true) // Spring Security 开启全局方法安全
 public class MicroserviceSecurityConfiguration extends ResourceServerConfigurerAdapter {
     private final OAuth2Properties oAuth2Properties;
 
