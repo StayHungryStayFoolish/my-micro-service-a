@@ -12,14 +12,16 @@ import java.util.List;
 @AuthorizedFeignClient(name = "MyMicroServiceB")
 public interface RequestMicroServiceClient {
 
+    @GetMapping("/api/demo/b/login")
+    public String getLogin();
 
-    @GetMapping("/api/demo/string-b")
+    @GetMapping("/api/demo/b/string-b")
     public String getStringFromB();
 
     /**
      * var 对应 MicroServiceB 的 RestAPI
      */
-    @PutMapping("/api/demo/string-b/{var}")
+    @PutMapping("/api/demo/b/string-b/{var}")
     public String setStringToB(@PathVariable("var") String var);
 
     /**
@@ -29,10 +31,10 @@ public interface RequestMicroServiceClient {
     public List<PersonVM> getPersonListFromB();
 
     /** 不同访问权限测试 ***********************************************/
-    @GetMapping("/api/demo/secured/string-b")
+    @GetMapping("/api/demo/b/secured/string-b")
     public String getStringSecuredToB();
 
-    @PutMapping("/api/demo/secured/string-b/{var}")
+    @PutMapping("/api/demo/b/secured/string-b/{var}")
     public String setStringSecuredToB(@PathVariable("var") String var);
 
 }
